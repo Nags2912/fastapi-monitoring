@@ -2,3 +2,8 @@ fastapi
 uvicorn
 psycopg2-binary
 prometheus_client
+
+# FastAPI - Helps create and run APIs quickly.  
+# Uvicorn - Runs FastAPI apps efficiently.  
+# psycopg2-binary - Connects Python with PostgreSQL.  
+# prometheus_client - Sends app metrics to Prometheus.  
