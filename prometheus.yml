@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 15s  # How often to scrape targets (default: 1m)
+
+scrape_configs:
+  - job_name: "fastapi"
+    static_configs:
+      - targets: ["localhost:9090",'52.23.197.115:9100','52.23.197.115:9187']  # replace with instance public ip
