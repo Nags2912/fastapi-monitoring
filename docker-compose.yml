@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  fastapi_app:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:pass%40123@db:5432/postgres
+
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass@123
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+  expoter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+
+  postgresexporter:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres-exporter
+    ports:
+      - "9187:9187"
+    depends_on:
+      - db
+    environment:
+      - DATA_SOURCE_NAME=postgresql://postgres:pass%40123@db:5432/postgres?sslmode=disable # replace with your db password
